@@ -1,0 +1,51 @@
+.corporate-container {
+    padding: 20px;
+  }
+  
+  .corporate-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 0;
+    border-bottom: 1px solid #ccc;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    .corporate-section {
+      display: contents;
+    }
+  }
+  
+  .alt-background {
+    background-color: rgba(167, 200, 250, 0.295);
+  }
+  
+  .text-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .corporate-image {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  
+  h2 {
+    color: #003366;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    color: #333;
+    font-size: 1.1em;
+    line-height: 1.6;
+  }
+  

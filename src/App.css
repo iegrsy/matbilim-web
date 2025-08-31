@@ -1,0 +1,180 @@
+/* Genel stil */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f8ff;
+}
+
+/* Menü arka planı */
+nav {
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+/* Flexbox düzeni ile elemanları hizalama */
+nav ul {
+  display: flex;
+  list-style: none;
+  padding-right: 25%;
+  margin: 0;
+  align-items: center;
+}
+
+nav ul li:first-child {
+  margin-right: auto;
+}
+
+nav ul li {
+  margin-left: 20px;
+}
+
+/* Menü yazı stili */
+nav ul li a {
+  text-decoration: none;
+  color: #001F3F;
+  font-size: 18px; /* Responsive için küçültüldü */
+  font-weight: bold;
+  padding: 10px 15px;
+}
+
+/* Scroll yapıldığında menü linkleri beyaz olacak */
+.navbar.scrolled ul li a {
+  color: #FFFFFF;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  height: 145px;
+  padding: 10px;
+  z-index: 100;
+  transition: background-color 0.3s ease;
+  background-color: rgba(0, 31, 63, 0);
+}
+
+.navbar.scrolled {
+  background-color: rgba(0, 31, 63, 1) !important;
+}
+
+.matbilim-logo {
+  width: 200px;
+  height: auto;
+  left: 20px;
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 1024px) {
+  nav ul {
+    padding-right: 15%;
+  }
+
+  nav ul li a {
+    font-size: 16px;
+  }
+
+  .matbilim-logo {
+    width: 150px;
+  }
+
+}
+
+@media (max-width: 1024px) {
+  nav ul {
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav ul li {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+
+  .navbar {
+    padding: 10px 20px;
+  }
+
+  .matbilim-logo {
+    width: 120px;
+  }
+  
+}
+
+@media (max-width: 1024px) {
+  nav ul li a {
+    font-size: 14px;
+  }
+
+  .matbilim-logo {
+    width: 100px;
+  }
+}
+
+.centered-image {
+  max-width: 90%;
+  height: auto;
+  margin: 20px auto;
+}
+
+.logo-fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.logo-image{
+  width: 122px;
+  height: auto;
+}
+
+@media only screen and (max-width: 1024px) {
+  .logo-fixed-top {
+    bottom: 0;
+    top: auto;
+    left: 0;
+    z-index: 1000;
+    transform: scaleX(1);
+    pointer-events: none; 
+  }
+
+  .logo-image{
+    width: 20%;
+    height: auto;
+  }
+
+  .matbilim-logo {
+    width: 200px;  /* Logo genişliği */
+    height: auto; /* Logo yüksekliği */
+    top: 25%; /* Logo'nun dikeyde hizalanması */
+    left: 20px; /* Buton ile logo arasındaki boşluk */
+    
+  }
+
+  .button-width-large{
+    width: 50%!important;
+    height: 50%!important;
+  }
+}
+
+.nav-link {
+  font-weight: bold;
+  font-size: large;
+  color: white;
+}
+
+.nav-link:hover {
+  font-weight: bold;
+  font-size: large;
+  color: gray;
+}
+
+.colorWhite{
+  color: white;
+}
+
+.button-width-large{
+  width: 15%;
+  height: 80px;
+}

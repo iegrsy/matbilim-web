@@ -1,0 +1,35 @@
+
+
+.button-width{
+  width: 10%; /* Butonların sabit genişliği */
+  margin: 5px;  /* Her buton arasına boşluk ekle */
+}
+
+.fixed-footer {
+  position: fixed; /* Başlangıçta sabit kalır */
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
+}
+
+.fixed-footer.footer-visible {
+  position: relative; /* Footer görünürse doğal akışa geçer */
+  bottom: auto;
+}
+
+.btn-toolbar {
+  flex-direction: row; /* Dikey hizalama */
+}
+
+@media (max-width: 1024px) {
+
+  .button-width {
+    width: 100%; /* Butonları tam genişlikte yapar */
+  }
+
+  
+}
+
+

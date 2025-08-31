@@ -1,0 +1,29 @@
+/* .fixed-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 10;
+    transition: all 5.3s ease-in-out;
+  }
+  
+  .fixed-footer.footer-visible {
+    position: relative; 
+    bottom: auto;
+  }
+   */
+
+   .fixed-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 10;
+    transition: all 0.3s ease-in-out;
+    min-height: 50px; /* Footer yüksekliğini belirleyin */
+}
+
+.fixed-footer.footer-visible {
+    position: relative;
+    bottom: auto;
+}

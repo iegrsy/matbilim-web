@@ -1,0 +1,53 @@
+/* Footer.module.css */
+.footer {
+    background-color: rgba(0, 31, 63, 1)!important;
+    color: white;
+    padding: 20px;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .footer-left, .footer-center, .footer-right {
+    flex: 1;
+  }
+  
+  .footer-links ul {
+    list-style: none; /* Nokta veya numaraları kaldırır */
+    padding: 0; /* Varsayılan boşluğu kaldırır */
+    margin: 0; /* Varsayılan boşluğu kaldırır */
+  }
+  
+  .footer-links li {
+    margin-bottom: 10px; /* Öğeler arasında boşluk bırakır */
+  }
+  
+  .footer-links a {
+    display: block!important; /* Linkleri bloğa dönüştürerek alt alta sıralar */
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .footer-links a:hover {
+    text-decoration: underline; /* Üzerine gelince alt çizgi ekler */
+  }
+  
+  .social-icons a {
+    margin-right: 10px;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  .social-icons a:hover {
+    color: #ccc;
+  }
+  
+  div.footer-links ul li a {
+    display: block !important; /* Başka stilleri geçersiz kılar */
+  }
+  .footer-links ul {
+    display: block; /* Flex veya Grid etkisini kaldırır */
+  }
+  

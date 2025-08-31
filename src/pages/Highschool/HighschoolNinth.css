@@ -1,0 +1,22 @@
+
+
+.text-list {
+  display: block;
+}
+
+.text-list p {
+  margin-bottom: 10px;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 20px; /* Noktadan sonra metin hizası için */
+}
+
+.text-list p::before {
+  content: '●'; /* Büyük nokta */
+  color: #003366; /* Noktanın rengi */
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1.2em; /* Noktanın boyutu */
+  line-height: 1.6;
+}

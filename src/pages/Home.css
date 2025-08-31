@@ -1,0 +1,145 @@
+/* Slider'ı pencereye tam sığdırma, yatay kaydırmayı önlemek için calc kullanıyoruz */
+.slider-container {
+  width: 100vw;
+  /* Tarayıcı kaydırma çubuğunu hesaba katarak genişliği ayarla */
+  height: 100vh;
+  overflow: hidden;
+  /* Yatay kaydırmayı sadece slider için engelle */
+  margin: 0 auto;
+  /* Slider'ı ortala */
+}
+
+.slick-slide img {
+  width: 100%;
+  /* Resmin genişliği tam olacak */
+  height: 100vh;
+  /* Yükseklik genişlik ile orantılı olacak */
+  object-fit: cover;
+  /* Görüntüyü kesmeden tam ekrana yerleştir */
+}
+
+
+/* Genel sayfa için yatay kaydırmayı kapatmak için */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* Tüm sayfada yatay kaydırmayı kapat */
+  box-sizing: border-box;
+}
+
+li {
+  flex-direction: column;
+  /* Öğelerin alt alta dizilmesi için */
+}
+
+.anasayfaParallax {
+  background-image: url(../assets/watermark_matbilim.png);
+  min-height: 300px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+.news{
+  background-color: #001F3F;
+}
+.activities{
+  background-color: azure;
+}
+
+.slick-prev,
+.slick-next {
+  width: 50%;
+  height: 50%;
+  z-index: 1;
+}
+
+.slick-prev {
+  left: -300px;
+}
+
+.slick-next {
+  right: -300px;
+}
+
+
+.full-width-image {
+  display: block;
+  margin: 0 auto; /* Yatay olarak ortalar */
+  max-width: 100%;
+  height: auto;
+}
+
+.full-width-image {
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+
+
+/* Popup container */
+.popup-container-home {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Saydam arka plan */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup content */
+.popup-content-home {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px; /* Masaüstünde maksimum genişlik */
+  max-height: 600px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Popup close button */
+.popup-close-home {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Popup image */
+.popup-image-home {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* Mobil uyum */
+@media (max-width: 768px) {
+  .popup-content-home {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .popup-close-home {
+    font-size: 16px;
+  }
+}

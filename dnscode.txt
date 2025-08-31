@@ -1,0 +1,32 @@
+Ad	TXT Değeri
+@	D7176977
+@	v=spf1 include:secureserver.net -all
+
+
+
+
+Geçerli DNS ana bilgisayarınızla hesabınızda oturum açın DNS nedir?
+
+Aşağıdaki TXT kayıtlarını ayarlayın.
+
+Ad	TXT Değeri
+@	v=spf1 include:secureserver.net -all
+CNAME Kayıtları: CNAME kaydı eklenecek ve giriş yapılacak yeri bulun:
+
+Ana Bilgisayar	Yönlendirilen yer:
+email	email.secureserver.net
+MX Kayıtları: MX kaydı eklenecek ve giriş yapılacak yeri bulun:
+
+Ana Bilgisayar	Öncelik	Hedef
+@	0	smtp.secureserver.net
+@	10	mailstore1.secureserver.net
+SRV Kayıtları: SRV kaydı eklenecek ve giriş yapılacak yeri bulun:
+
+Bağlantı noktası	Protokol	Ad	Hizmet	Öncelik	Kullanılma Sıklığı	Hedef
+443	_tcp	@	_autodiscover	100	1	autodiscover.secureserver.net
+Alan adınızda mevcut posta hedef kayıtları varsa, Profesyonel E-postanız çalışmaya başlamadan önce eski kayıtları silmeniz gerekecektir. Kayıtlarınızda yapacağınız her türlü değişikliğin yansıması 24 saat kadar sürebilir.
+
+email.secureserver.net
+angelamatheson@matbilim.com
+angelamatheson01
+Buzz-!6-4k

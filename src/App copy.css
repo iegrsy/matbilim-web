@@ -1,0 +1,186 @@
+.App {
+  text-align: center;
+}
+
+
+/* Genel stil */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0; /* Navbar yüksekliği kadar bir boşluk bırak */
+  padding: 0;
+  background-color: #f0f8ff;
+}
+
+/* Menü arka planı */
+nav {
+  background-color: #ffffff; 
+  padding: 10px;
+}
+
+/* Flexbox düzeni ile elemanları hizalama */
+nav ul {
+  display: flex;
+  list-style: none;
+  padding-right: 25%;
+  margin: 0;
+  align-items: center; /* Elemanları dikeyde ortalamak için */
+}
+
+nav ul li:first-child {
+  margin-right: auto; /* İlk eleman (home) en sola yaslanacak */
+}
+
+nav ul li {
+  margin-left: 20px; /* Diğer elemanlar sağa yaslanacak */
+}
+
+/* menü yazı sitili */
+nav ul li a {
+  text-decoration: none;
+  color: #001F3F;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+
+/* Scroll yapıldığında menü linkleri beyaz olacak */
+.navbar.scrolled ul li a {
+  color: #FFFFFF; /* Scroll sonrası renk */
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Sayfanın tamamını kapsar */
+}
+
+/* İçerik alanı için */
+.content {
+  flex-grow: 1; /* İçeriğin footer'a kadar esnemesini sağlar */
+}
+
+.nav-link {
+  font-weight: bold;
+  font-size: large;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px;
+  z-index: 100;
+  transition: background-color 0.3s ease; /* Arka plan değişimi pürüzsüz olsun */
+  background-color: rgba(0, 31, 63, 0); /* Tamamen transparan */
+}
+
+.navbar.scrolled {
+  background-color: rgba(0, 31, 63, 1) !important;
+}
+
+.matbilim-logo {
+  width: 300px;  /* Logo genişliği */
+  height: auto; /* Logo yüksekliği */
+  top: 25%; /* Logo'nun dikeyde hizalanması */
+  left: 20px; /* Buton ile logo arasındaki boşluk */
+}
+
+
+ul {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
+
+ul li {
+  display: inline;
+}
+
+
+.colorWhite{
+  color: white;
+}
+
+.centered-image {
+  display: block;
+  margin: 0 auto; /* Yatay olarak ortalar */
+  max-width: 80%; /* Ekrana sığması için isteğe bağlı */
+  height: auto; /* Oran koruma */
+}
+
+
+.navbar-nav {
+  padding: 0; /* Varsayılan boşlukları kaldırır */
+}
+
+.nav-item {
+  margin: 0 10px; /* Yanlardaki boşluğu azaltır */
+}
+
+.nav-link {
+  font-size: 16px; /* Yazı boyutunu küçültür */
+  padding: 5px 10px; /* Link içindeki boşlukları azaltır */
+  color: #FFFFFF; /* Yazı rengini değiştirir (isteğe bağlı) */
+}
+
+.nav-link:hover {
+  color: #0056b3; /* Hover durumunda yazı rengini değiştirir */
+  text-decoration: none; /* Alt çizgiyi kaldırır */
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
+    flex-direction: column; /* Mobilde dikey hizalar */
+  }
+
+  .nav-item {
+    margin: 5px 0; /* Mobilde dikey boşluk ayarlaması */
+  }
+
+  .nav-link {
+    font-size: 16px; /* Mobilde okunabilirliği artırır */
+  }
+}
+
+.custom-navbar {
+  padding-right: 10%; /* Sağdan %10 boşluk bırakır */
+}
+
+.justify-content-end {
+  display: flex;
+  justify-content: flex-end; /* Sağ hizalama */
+}
+
+
+
+
+.container {
+  position: relative; /* Ana konteynerde relative pozisyon ayarla */
+}
+
+
+.logo-fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+
+/* Mobil cihazlar için (768px ve altı) */
+@media only screen and (max-width: 890px) {
+  .logo-fixed-top {
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    right: 0;
+    z-index: 1000;
+  }
+
+  .matbilim-logo {
+    width: 200px;  /* Logo genişliği */
+    height: auto; /* Logo yüksekliği */
+    top: 25%; /* Logo'nun dikeyde hizalanması */
+    left: 20px; /* Buton ile logo arasındaki boşluk */
+  }
+}
+
