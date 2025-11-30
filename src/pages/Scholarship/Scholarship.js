@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import './Scholarship.css';
 import emailjs from 'emailjs-com';
 import slider1 from '../../assets/scholarship_image.png';
@@ -9,6 +10,8 @@ import 'jspdf-autotable'; // Tablo için
 import { robotoNormal } from './fonts';
 function Scholarship() {
   const { t } = useTranslation();
+  const location = useLocation();
+  const formRef = useRef(null);
 
   const [formData, setFormData] = useState({
     studentName: '',
@@ -131,11 +134,19 @@ function Scholarship() {
     const { name, value, type, checked } = e.target;
     const fieldValue = type === 'checkbox' ? checked : value;
 
-    setFormData({
-      ...formData,
-      [name]: fieldValue,
-    });
-
+    // Eğer examDay değiştiyse, examHour'u sıfırla
+    if (name === 'examDay') {
+      setFormData({
+        ...formData,
+        [name]: fieldValue,
+        examHour: '', // examHour'u sıfırla
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: fieldValue,
+      });
+    }
 
     // Eğer input string ise ve boş değilse hata durumunu kaldır
     if (typeof fieldValue === 'string' && fieldValue.trim() !== '') {
@@ -146,13 +157,24 @@ function Scholarship() {
     }
   };
 
+  // Sınav gününe göre seans saatlerini döndür
+  const getExamHours = () => {
+    const examDay = formData.examDay;
+    if (examDay === '3 Ocak' || examDay === '4 Ocak' || examDay === '10 Ocak' || examDay === '11 Ocak') {
+      return ['10:00', '14:00'];
+    } else if (examDay === '5 Ocak' || examDay === '12 Ocak') {
+      return ['17:00'];
+    }
+    return [];
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const newErrors = {};
 
-    ['studentName', 'studentSurname', 'tckn', 'applicationSchool', 'classLevel', 'parentName', 'parentSurname', 'relation', 'phone'].forEach((field) => {
+    ['studentName', 'studentSurname', 'tckn', 'applicationSchool', 'classLevel', 'parentName', 'parentSurname', 'relation', 'phone', 'examDay', 'examHour'].forEach((field) => {
       if (!formData[field]?.trim()) {
         newErrors[field] = true;
       }
@@ -190,14 +212,15 @@ function Scholarship() {
     };
 
     emailjs.send(
-      'service_t4fkiok', // Service ID
-      'template_gexds9p', // Template ID
+      'service_1dalgmr', // Service ID
+      'template_mq82dbw', // Template ID
       emailParams, // Doğru parametre
-      'LKhU6Vp8nNpmSaWYj' // Public Key
+      'oa-6_gZ_ZgQ4EEK3U' // Public Key
     )
       .then(
         (result) => {
-          // alert('Başvurunuz başarıyla alındı!');
+          // Email başarılı olduğunda PDF'i oluştur ve indir
+          handleDownloadPDF();
           // Popup'ı tetiklemek için handleDownloadSubmit çağrılır
           handleDownloadSubmit();
         },
@@ -213,6 +236,18 @@ function Scholarship() {
     setShowPopup(!showPopup);
   };
 
+  // Sayfa yüklendiğinde veya popup'tan geldiğinde forma scroll et
+  useEffect(() => {
+    // URL'de form parametresi varsa veya popup'tan gelindiyse forma scroll et
+    if (location.search.includes('form=true') || location.hash === '#form') {
+      setTimeout(() => {
+        if (formRef.current) {
+          formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    }
+  }, [location]);
+
   return (
     <div>
       <div className="empty-space_init"></div>
@@ -223,7 +258,7 @@ function Scholarship() {
       <div className="container mt-5">
         <div className="empty-space"></div>
         <div className="empty-space_mid"></div>
-        <section className="pt-2 pb-2">
+        {/* <section className="pt-2 pb-2">
           <div class="btn-toolbar d-flex justify-content-lg-around" role="toolbar" >
             <div class="btn-group button-width-large" role="group" aria-label="Third group">
               <button type="button" className="btn btn-purple-moon btn-rounded" onClick={() => (window.location.href = '/our_staff')}>{t('staff')}</button>
@@ -235,226 +270,310 @@ function Scholarship() {
               <button type="button" className="btn btn-purple-moon btn-rounded" onClick={() => window.open(process.env.PUBLIC_URL + '/pdfs/prices.pdf', '_blank')}>{t('prices')}</button>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <h2 className="text-center">{t('scholarship_form_title')}</h2>
-        <form onSubmit={handleSubmit}>
+        <form ref={formRef} id="scholarship-form" onSubmit={handleSubmit}>
           <h4>{t('student_and_school_info')}</h4>
-          <div className="mb-3">
-            <label htmlFor="studentName">{t('student_name')}*</label>
-            <input
-              type="text"
-              className={`form-control ${errors.studentName ? 'is-invalid' : ''}`}
-              id="studentName"
-              name="studentName"
-              value={formData.studentName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="studentSurname">{t('student_surname')}*</label>
-            <input
-              type="text"
-              className={`form-control ${errors.studentSurname ? 'is-invalid' : ''}`}
-              id="studentSurname"
-              name="studentSurname"
-              value={formData.studentSurname}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="tckn">{t('tckn')}*</label>
-            <input
-              type="text"
-              className={`form-control ${errors.tckn ? 'is-invalid' : ''}`}
-              id="tckn"
-              name="tckn"
-              value={formData.tckn}
-              onChange={handleChange}
-              maxLength="11"
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="birthDate">{t('birth_date')}</label>
-            <input
-              type="text"
-              className="form-control"
-              id="birthDate"
-              name="birthDate"
-              value={formData.birthDate}
-              placeholder="gg.aa.yyyy"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="schoolName">{t('school_name')}</label>
-            <input
-              type="text"
-              className="form-control"
-              id="schoolName"
-              name="schoolName"
-              value={formData.schoolName}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="applicationSchool">{t('application_school')}*</label>
-            <select
-              className={`form-select ${errors.applicationSchool ? 'is-invalid' : ''}`}
-              id="applicationSchool"
-              name="applicationSchool"
-              value={formData.applicationSchool}
-              onChange={handleChange}
-            >
-              <option value="" disabled>{t('select')}</option>
-              <option value="Kreş">{t('kindergarten')}</option>
-              <option value="Anaokulu">{t('preschool_main')}</option>
-              <option value="İlkokul">{t('primaryschool')}</option>
-              <option value="Ortaokul">{t('secondaryschool')}</option>
-              <option value="Lise">{t('highschool')}</option>
-              <option value="IB Bilim Kursu">{t('ib_scinece')}</option>
-            </select>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="classLevel">{t('class_level')}*</label>
-            <select
-              className={`form-select ${errors.classLevel ? 'is-invalid' : ''}`}
-              id="classLevel"
-              name="classLevel"
-              value={formData.classLevel}
-              onChange={handleChange}
-            >
-              <option value="" disabled>{t('select')}</option>
-              <option value="Kreş">{t('kindergarten')}</option>
-              <option value="Anaokulu">{t('preschool_main')}</option>
-              <option value="1. Sınıf">{"1. Sınıf"}</option>
-              <option value="2. Sınıf">{"2. Sınıf"}</option>
-              <option value="3. Sınıf">{"3. Sınıf"}</option>
-              <option value="4. Sınıf">{"4. Sınıf"}</option>
-              <option value="5. Sınıf">{"5. Sınıf"}</option>
-              <option value="6. Sınıf">{"6. Sınıf"}</option>
-              <option value="7. Sınıf">{"7. Sınıf"}</option>
-              <option value="8. Sınıf">{"8. Sınıf"}</option>
-              <option value="9. Sınıf">{"9. Sınıf"}</option>
-              <option value="10. Sınıf">{"10. Sınıf"}</option>
-              <option value="11. Sınıf">{"11. Sınıf"}</option>
-
-            </select>
+          
+          {/* Ad ve Soyad - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="studentName">{t('student_name')}*</label>
+              <input
+                type="text"
+                className={`form-control ${errors.studentName ? 'is-invalid' : ''}`}
+                id="studentName"
+                name="studentName"
+                value={formData.studentName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="studentSurname">{t('student_surname')}*</label>
+              <input
+                type="text"
+                className={`form-control ${errors.studentSurname ? 'is-invalid' : ''}`}
+                id="studentSurname"
+                name="studentSurname"
+                value={formData.studentSurname}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
-          {/* <div className="mb-3">
-            <label htmlFor="classLevel">{t('class_level')}*</label>
-            <input
-              type="text"
-              className={`form-control ${errors.classLevel ? 'is-invalid' : ''}`}
-              id="classLevel"
-              name="classLevel"
-              value={formData.classLevel}
-              onChange={handleChange}
-              placeholder={t('select_class_level')}
-            />
-          </div> */}
-          <div className="mb-3">
-            <label htmlFor="gender">{t('gender')}</label>
-            <select
-              className="form-select"
-              id="gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-            >
-              <option value="" disabled>{t('select')}</option>
-              <option value="Erkek">{t('male')}</option>
-              <option value="Kadın">{t('female')}</option>
-            </select>
+          {/* TCKN ve Cinsiyet - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="tckn">{t('tckn')}*</label>
+              <input
+                type="text"
+                className={`form-control ${errors.tckn ? 'is-invalid' : ''}`}
+                id="tckn"
+                name="tckn"
+                value={formData.tckn}
+                onChange={handleChange}
+                maxLength="11"
+              />
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="gender">{t('gender')}</label>
+              <select
+                className="form-select"
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+              >
+                <option value="" disabled>{t('select')}</option>
+                <option value="Erkek">{t('male')}</option>
+                <option value="Kadın">{t('female')}</option>
+              </select>
+            </div>
           </div>
+
+          {/* Doğum Tarihi - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="birthDate">{t('birth_date')}</label>
+              <input
+                type="text"
+                className="form-control"
+                id="birthDate"
+                name="birthDate"
+                value={formData.birthDate}
+                placeholder="gg.aa.yyyy"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <hr className="form-divider" />
+
+          {/* Okul Adı ve Başvuru Yapılan Okul - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="schoolName">{t('school_name')}</label>
+              <input
+                type="text"
+                className="form-control"
+                id="schoolName"
+                name="schoolName"
+                value={formData.schoolName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="applicationSchool">{t('application_school')}*</label>
+              <select
+                className={`form-select ${errors.applicationSchool ? 'is-invalid' : ''}`}
+                id="applicationSchool"
+                name="applicationSchool"
+                value={formData.applicationSchool}
+                onChange={handleChange}
+              >
+                <option value="" disabled>{t('select')}</option>
+                <option value="Kreş">{t('kindergarten')}</option>
+                <option value="Anaokulu">{t('preschool_main')}</option>
+                <option value="İlkokul">{t('primaryschool')}</option>
+                <option value="Ortaokul">{t('secondaryschool')}</option>
+                <option value="Lise">{t('highschool')}</option>
+                <option value="IB Bilim Kursu">{t('ib_scinece')}</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Sınıf Seviyesi - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="classLevel">{t('class_level')}*</label>
+              <select
+                className={`form-select ${errors.classLevel ? 'is-invalid' : ''}`}
+                id="classLevel"
+                name="classLevel"
+                value={formData.classLevel}
+                onChange={handleChange}
+              >
+                <option value="" disabled>{t('select')}</option>
+                <option value="Kreş">{t('kindergarten')}</option>
+                <option value="Anaokulu">{t('preschool_main')}</option>
+                <option value="1. Sınıf">{"1. Sınıf"}</option>
+                <option value="2. Sınıf">{"2. Sınıf"}</option>
+                <option value="3. Sınıf">{"3. Sınıf"}</option>
+                <option value="4. Sınıf">{"4. Sınıf"}</option>
+                <option value="5. Sınıf">{"5. Sınıf"}</option>
+                <option value="6. Sınıf">{"6. Sınıf"}</option>
+                <option value="7. Sınıf">{"7. Sınıf"}</option>
+                <option value="8. Sınıf">{"8. Sınıf"}</option>
+                <option value="9. Sınıf">{"9. Sınıf"}</option>
+                <option value="10. Sınıf">{"10. Sınıf"}</option>
+                <option value="11. Sınıf">{"11. Sınıf"}</option>
+              </select>
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="stream">{t('select_stream')}</label>
+              <select
+                className="form-select"
+                id="stream"
+                name="stream"
+                value={formData.stream}
+                onChange={handleChange}
+              >
+                <option value="" disabled>{t('select')}</option>
+                <option value="TM">TM</option>
+                <option value="MF">MF</option>
+                <option value="Diğer">Diğer</option>
+              </select>
+            </div>
+          </div>
+
+          <hr className="form-divider" />
+
+          {/* Sınav Günü ve Saati - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="examDay">{t('exam_day')}*</label>
+              <select
+                className={`form-select ${errors.examDay ? 'is-invalid' : ''}`}
+                id="examDay"
+                name="examDay"
+                value={formData.examDay}
+                onChange={handleChange}
+              >
+                <option value="" disabled>{t('select')}</option>
+                <option value="3 Ocak">3 Ocak</option>
+                <option value="4 Ocak">4 Ocak</option>
+                <option value="5 Ocak">5 Ocak</option>
+                <option value="10 Ocak">10 Ocak</option>
+                <option value="11 Ocak">11 Ocak</option>
+                <option value="12 Ocak">12 Ocak</option>
+              </select>
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="examHour">{t('exam_hour')}*</label>
+              <select
+                className={`form-select ${errors.examHour ? 'is-invalid' : ''}`}
+                id="examHour"
+                name="examHour"
+                value={formData.examHour}
+                onChange={handleChange}
+                disabled={!formData.examDay || getExamHours().length === 0}
+              >
+                <option value="" disabled>{formData.examDay ? t('select') : t('first_select_exam_day')}</option>
+                {getExamHours().map((hour) => (
+                  <option key={hour} value={hour}>
+                    {hour}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <hr className="form-divider" />
 
           <h4>{t('parent_info')}</h4>
-          <div className="mb-3">
-            <label htmlFor="parentName">{t('parent_name')}*</label>
-            <input
-              type="text"
-              className={`form-control ${errors.parentName ? 'is-invalid' : ''}`}
-              id="parentName"
-              name="parentName"
-              value={formData.parentName}
-              onChange={handleChange}
-            />
+          
+          {/* Veli Adı ve Soyadı - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="parentName">{t('parent_name')}*</label>
+              <input
+                type="text"
+                className={`form-control ${errors.parentName ? 'is-invalid' : ''}`}
+                id="parentName"
+                name="parentName"
+                value={formData.parentName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="parentSurname">{t('parent_surname')}*</label>
+              <input
+                type="text"
+                className={`form-control ${errors.parentSurname ? 'is-invalid' : ''}`}
+                id="parentSurname"
+                name="parentSurname"
+                value={formData.parentSurname}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="parentSurname">{t('parent_surname')}*</label>
-            <input
-              type="text"
-              className={`form-control ${errors.parentSurname ? 'is-invalid' : ''}`}
-              id="parentSurname"
-              name="parentSurname"
-              value={formData.parentSurname}
-              onChange={handleChange}
-            />
+
+          {/* Yakınlık ve Meslek - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="relation">{t('relation')}*</label>
+              <select
+                className={`form-select ${errors.relation ? 'is-invalid' : ''}`}
+                id="relation"
+                name="relation"
+                value={formData.relation}
+                onChange={handleChange}
+              >
+                <option value="" disabled>{t('select')}</option>
+                <option value="Anne">{t('mother')}</option>
+                <option value="Baba">{t('father')}</option>
+                <option value="Diğer">{t('other')}</option>
+              </select>
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="occupation">{t('occupation')}</label>
+              <input
+                type="text"
+                className="form-control"
+                id="occupation"
+                name="occupation"
+                value={formData.occupation}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="relation">{t('relation')}*</label>
-            <select
-              className={`form-select ${errors.relation ? 'is-invalid' : ''}`}
-              id="relation"
-              name="relation"
-              value={formData.relation}
-              onChange={handleChange}
-            >
-              <option value="" disabled>{t('select')}</option>
-              <option value="Anne">{t('mother')}</option>
-              <option value="Baba">{t('father')}</option>
-              <option value="Diğer">{t('other')}</option>
-            </select>
+
+          {/* Telefon ve E-posta - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="phone">{t('mobile_phone')}*</label>
+              <input
+                type="text"
+                className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-6 col-12">
+              <label htmlFor="email">{t('email')}</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="occupation">{t('occupation')}</label>
-            <input
-              type="text"
-              className="form-control"
-              id="occupation"
-              name="occupation"
-              value={formData.occupation}
-              onChange={handleChange}
-            />
+
+          {/* Nereden Duydunuz - Tek Satır */}
+          <div className="row mb-3">
+            <div className="col-md-6 col-12">
+              <label htmlFor="source">{t('how_did_you_hear')}</label>
+              <select
+                className="form-select"
+                id="source"
+                name="source"
+                value={formData.source}
+                onChange={handleChange}
+              >
+                <option value="" disabled>{t('select')}</option>
+                <option value="internet">{t('internet')}</option>
+                <option value="friend">{t('friend')}</option>
+                <option value="advertisement">{t('advertisement')}</option>
+              </select>
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="phone">{t('mobile_phone')}*</label>
-            <input
-              type="text"
-              className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="email">{t('email')}</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="source">{t('how_did_you_hear')}</label>
-            <select
-              className="form-select"
-              id="source"
-              name="source"
-              value={formData.source}
-              onChange={handleChange}
-            >
-              <option value="" disabled>{t('select')}</option>
-              <option value="internet">{t('internet')}</option>
-              <option value="friend">{t('friend')}</option>
-              <option value="advertisement">{t('advertisement')}</option>
-            </select>
-          </div>
+
+          <hr className="form-divider" />
           <div className="form-check mb-3">
             <input
               className="form-check-input"

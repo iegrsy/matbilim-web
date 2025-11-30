@@ -45,10 +45,10 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    // 5 saniye sonra popup'ı kapat
+    // 15 saniye sonra popup'ı kapat
     const timer = setTimeout(() => {
       setShowPopup(false);
-    }, 7000);
+    }, 15000);
 
     return () => clearTimeout(timer); // Temizlik işlemi
   }, []);
@@ -73,18 +73,18 @@ function Home() {
     <div>
       <div className="App">
         {/* Popup */}
-        {/*showPopup && (
+        {showPopup && (
           <div className="popup-container-home">
             <div className="popup-content-home">
               <button className="popup-close-home" onClick={closePopup}>
                 ×
               </button>
-              <a href="/scholarship">
+              <a href="/scholarship?form=true#form">
                 <img src={popupImage} alt="Popup Görseli" className="popup-image-home" />
               </a>
             </div>
           </div>
-        )}*/}
+        )}
         <WhatsApp />
       </div>
       {/* Slider */}

@@ -32,19 +32,38 @@ h4 {
 .form-label {
   font-weight: 500;
   color: #495057;
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
 }
 
 .form-control {
   border-radius: 5px;
-  padding: 10px;
+  padding: 8px 12px;
   font-size: 14px;
+  border: 1px solid #ced4da;
+  width: 100%;
+}
+
+.form-control:focus {
+  border-color: #5177c4;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(81, 119, 196, 0.25);
 }
 
 /* Seçim kutusu */
 .form-select {
   border-radius: 5px;
-  padding: 10px;
+  padding: 8px 12px;
   font-size: 14px;
+  border: 1px solid #ced4da;
+  width: 100%;
+}
+
+.form-select:focus {
+  border-color: #5177c4;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(81, 119, 196, 0.25);
 }
 
 /* Zorunlu alan uyarısı */
@@ -79,6 +98,40 @@ input:required {
   font-size: 14px;
 }
 
+/* Form satırları için kompakt tasarım */
+.row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.row > [class*="col-"] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Form başlıkları */
+h4 {
+  color: #343a40;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 2px solid #5177c4;
+  padding-bottom: 8px;
+}
+
+/* Form ayırıcı çizgileri */
+.form-divider {
+  margin: 25px 0;
+  border: 0;
+  border-top: 2px solid #e0e0e0;
+  opacity: 0.6;
+}
+
+.form-divider:first-of-type {
+  margin-top: 20px;
+}
+
 /* Responsive tasarım */
 @media (max-width: 1024px) {
   .container {
@@ -89,8 +142,83 @@ input:required {
     font-size: 20px;
   }
 
+  h4 {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+
   button {
     font-size: 14px;
+  }
+
+  .form-control,
+  .form-select {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  .form-label {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .row {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+
+  .row > [class*="col-"] {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 15px;
+  }
+
+  .mb-3 {
+    margin-bottom: 15px !important;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  h4 {
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .form-control,
+  .form-select {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .form-label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 5px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  h4 {
+    font-size: 14px;
+  }
+
+  .form-control,
+  .form-select {
+    font-size: 14px;
+    padding: 10px;
   }
 }
 

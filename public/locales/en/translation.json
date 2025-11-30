@@ -188,6 +188,7 @@
   "all_programs": "IELTS, AP, SAT",
   "exam_day": "Exam Day",
   "exam_hour": "Exam Hour",
+  "first_select_exam_day": "Please select exam day first",
   "prices": "PRICE INFO",
   "download_exam_entry": "Download Exam Entry Document",
   "exam_document_before": "We look forward to welcoming you to our school for more detailed information.",
