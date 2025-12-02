@@ -907,17 +907,32 @@ function Scholarship() {
       )}
 
         {showDownloadPopup && (
-          <div className="popup-overlay">
-            <div className="popup-content">
-              <p>Ön Kaydınız Başarı İle Alınmıştır.</p>
+          <div className="popup-overlay" onClick={closeDownloadPopup}>
+            <div className="modern-popup-content" onClick={(e) => e.stopPropagation()}>
+              <div className="popup-header">
+                <div className="success-icon">
+                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" fill="#28a745" opacity="0.1"/>
+                    <path d="M9 12l2 2 4-4" stroke="#28a745" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="12" cy="12" r="10" stroke="#28a745" strokeWidth="2"/>
+                  </svg>
+                </div>
+                <h3 className="popup-title">Ön Kaydınız Başarı İle Alınmıştır</h3>
+              </div>
+              
+              <div className="popup-body">
+                <p className="popup-message">{t('exam_document_before')}</p>
+              </div>
 
-              <br></br>
-              <p>{t('exam_document_before')}</p>
-              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '20px' }}>
-                <button onClick={handlePrintPDF} className="btn btn-primary">
+              <div className="popup-actions">
+                <button onClick={handlePrintPDF} className="btn-print">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M6 14h12v8H6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                   Yazdır
                 </button>
-                <button onClick={closeDownloadPopup} className="btn btn-secondary">
+                <button onClick={closeDownloadPopup} className="btn-close-popup">
                   {t('close')}
                 </button>
               </div>
