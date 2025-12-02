@@ -79,6 +79,11 @@ function Scholarship() {
     doc.text(`Sınıf Seviyesi: ${formData.classLevel}`, rightX, currentY);
     currentY += lineHeight;
 
+    if (formData.stream) {
+      doc.text(`Alan Seçimi: ${formData.stream}`, leftX, currentY);
+      currentY += lineHeight;
+    }
+
     if (formData.examHour) {
       doc.text(`Sınav Saati: ${formData.examHour}`, leftX, currentY);
     }
@@ -116,13 +121,98 @@ function Scholarship() {
     doc.save(`Sınav_Belgesi_${formData.studentName}_${formData.studentSurname}.pdf`);
   };
 
+  const handlePrintPDF = () => {
+    const doc = new jsPDF();
+    doc.addFileToVFS('Roboto-Regular.ttf', robotoNormal);
+    doc.addFont('Roboto-Regular.ttf', 'Roboto', 'normal');
+    doc.setFont('Roboto');
 
+    const leftX = 20;
+    const rightX = 110;
+    const lineHeight = 10;
+    let currentY = 40;
+    const sectionPadding = 5;
 
+    doc.setFontSize(18);
+    doc.text('Sınav Giriş Belgesi', 105, 20, null, null, 'center');
+
+    doc.setFontSize(12);
+    let sectionStartY = currentY;
+    doc.text('Öğrenci Bilgileri:', leftX, currentY);
+    currentY += lineHeight;
+
+    doc.text(`Ad: ${formData.studentName}`, leftX, currentY);
+    doc.text(`Soyad: ${formData.studentSurname}`, rightX, currentY);
+    currentY += lineHeight;
+
+    doc.text(`TCKN: ${formData.tckn}`, leftX, currentY);
+    doc.text(`Doğum Tarihi: ${formData.birthDate}`, rightX, currentY);
+    currentY += lineHeight;
+
+    doc.text(`Okul Adı: ${formData.schoolName}`, leftX, currentY);
+    currentY += lineHeight * 2;
+
+    doc.rect(leftX - sectionPadding, sectionStartY - lineHeight, 170, currentY - sectionStartY + sectionPadding);
+
+    sectionStartY = currentY;
+    doc.text('Sınav Bilgileri:', leftX, currentY);
+    currentY += lineHeight;
+
+    doc.text(`Başvurulan Okul: ${formData.applicationSchool}`, leftX, currentY);
+    doc.text(`Sınıf Seviyesi: ${formData.classLevel}`, rightX, currentY);
+    currentY += lineHeight;
+
+    if (formData.stream) {
+      doc.text(`Alan Seçimi: ${formData.stream}`, leftX, currentY);
+      currentY += lineHeight;
+    }
+
+    if (formData.examHour) {
+      doc.text(`Sınav Saati: ${formData.examHour}`, leftX, currentY);
+    }
+    if (formData.examDay) {
+      doc.text(`Sınav Günü: ${formData.examDay}`, rightX, currentY);
+    }
+    currentY += lineHeight;
+
+    currentY += lineHeight * 2;
+
+    doc.rect(leftX - sectionPadding, sectionStartY - lineHeight, 170, currentY - sectionStartY + sectionPadding);
+
+    sectionStartY = currentY;
+    doc.text('Veli Bilgileri:', leftX, currentY);
+    currentY += lineHeight;
+
+    doc.text(`Ad: ${formData.parentName}`, leftX, currentY);
+    doc.text(`Soyad: ${formData.parentSurname}`, rightX, currentY);
+    currentY += lineHeight;
+
+    doc.text(`Yakınlık: ${formData.relation}`, leftX, currentY);
+    doc.text(`Meslek: ${formData.occupation}`, rightX, currentY);
+    currentY += lineHeight;
+
+    doc.text(`Telefon: ${formData.phone}`, leftX, currentY);
+    doc.text(`E-posta: ${formData.email}`, rightX, currentY);
+    currentY += lineHeight;
+
+    doc.rect(leftX - sectionPadding, sectionStartY - lineHeight, 170, currentY - sectionStartY + sectionPadding);
+
+    // Yazdır - PDF'i yeni pencerede aç, kullanıcı tarayıcıdan yazdırabilir
+    const pdfBlob = doc.output('blob');
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    const printWindow = window.open(pdfUrl, '_blank');
+    if (printWindow) {
+      printWindow.onload = () => {
+        printWindow.print();
+      };
+    }
+  };
 
   const [errors, setErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState(''); // Gönderim durumu
   const [showPopup, setShowPopup] = useState(false);
   const [showDownloadPopup, setDownloadShowPopup] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const handleDownloadSubmit = () => {
     setDownloadShowPopup(true); // Popup'ı aç
   };
@@ -141,6 +231,15 @@ function Scholarship() {
         [name]: fieldValue,
         examHour: '', // examHour'u sıfırla
       });
+    } else if (name === 'classLevel') {
+      // Sınıf seviyesi değiştiğinde, sınav alanlarını ve alan seçimini sıfırla
+      setFormData({
+        ...formData,
+        [name]: fieldValue,
+        examDay: '',
+        examHour: '',
+        stream: '',
+      });
     } else {
       setFormData({
         ...formData,
@@ -155,6 +254,23 @@ function Scholarship() {
         [name]: false,
       }));
     }
+  };
+
+  // Sınıf seviyesine göre sınav alanlarının gösterilip gösterilmeyeceğini kontrol et
+  const shouldShowExamFields = () => {
+    const classLevel = formData.classLevel;
+    // Kreş, Anaokulu, 1. Sınıf, 2. Sınıf sınava girmiyor
+    if (classLevel === 'Kreş' || classLevel === 'Anaokulu' || classLevel === '1. Sınıf' || classLevel === '2. Sınıf') {
+      return false;
+    }
+    return true;
+  };
+
+  // Sınıf seviyesine göre alan seçiminin gösterilip gösterilmeyeceğini kontrol et
+  const shouldShowStreamField = () => {
+    const classLevel = formData.classLevel;
+    // Sadece 11. Sınıf için alan seçimi gösterilir
+    return classLevel === '11. Sınıf';
   };
 
   // Sınav gününe göre seans saatlerini döndür
@@ -174,7 +290,15 @@ function Scholarship() {
 
     const newErrors = {};
 
-    ['studentName', 'studentSurname', 'tckn', 'applicationSchool', 'classLevel', 'parentName', 'parentSurname', 'relation', 'phone', 'examDay', 'examHour'].forEach((field) => {
+    // Zorunlu alanlar
+    const requiredFields = ['studentName', 'studentSurname', 'tckn', 'applicationSchool', 'classLevel', 'parentName', 'parentSurname', 'relation', 'phone'];
+    
+    // Sınav alanları sadece sınava giren sınıflar için zorunlu
+    if (shouldShowExamFields()) {
+      requiredFields.push('examDay', 'examHour');
+    }
+
+    requiredFields.forEach((field) => {
       if (!formData[field]?.trim()) {
         newErrors[field] = true;
       }
@@ -219,10 +343,16 @@ function Scholarship() {
     )
       .then(
         (result) => {
-          // Email başarılı olduğunda PDF'i oluştur ve indir
-          handleDownloadPDF();
-          // Popup'ı tetiklemek için handleDownloadSubmit çağrılır
-          handleDownloadSubmit();
+          // Başarı mesajını göster
+          setShowSuccessMessage(true);
+          // 3 saniye sonra başarı mesajını kapat ve popup'ı aç
+          setTimeout(() => {
+            setShowSuccessMessage(false);
+            // Email başarılı olduğunda PDF'i oluştur ve indir
+            handleDownloadPDF();
+            // Popup'ı tetiklemek için handleDownloadSubmit çağrılır
+            handleDownloadSubmit();
+          }, 3000);
         },
         (error) => {
           alert('Bir hata oluştu, lütfen tekrar deneyin.');
@@ -258,7 +388,7 @@ function Scholarship() {
       <div className="container mt-5">
         <div className="empty-space"></div>
         <div className="empty-space_mid"></div>
-        {/* <section className="pt-2 pb-2">
+        <section className="pt-2 pb-2">
           <div class="btn-toolbar d-flex justify-content-lg-around" role="toolbar" >
             <div class="btn-group button-width-large" role="group" aria-label="Third group">
               <button type="button" className="btn btn-purple-moon btn-rounded" onClick={() => (window.location.href = '/our_staff')}>{t('staff')}</button>
@@ -267,10 +397,10 @@ function Scholarship() {
               <button type="button" className="btn btn-purple-moon btn-rounded" onClick={() => (window.location.href = '/achievement')}>{t('achievement')}</button>
             </div>
             <div class="btn-group button-width-large" role="group">
-              <button type="button" className="btn btn-purple-moon btn-rounded" onClick={() => window.open(process.env.PUBLIC_URL + '/pdfs/prices.pdf', '_blank')}>{t('prices')}</button>
+              <button type="button" className="btn btn-purple-moon btn-rounded" onClick={handlePopupToggle}>{t('exem_subject')}</button>
             </div>
           </div>
-        </section> */}
+        </section>
 
         <h2 className="text-center">{t('scholarship_form_title')}</h2>
         <form ref={formRef} id="scholarship-form" onSubmit={handleSubmit}>
@@ -409,64 +539,68 @@ function Scholarship() {
                 <option value="11. Sınıf">{"11. Sınıf"}</option>
               </select>
             </div>
-            <div className="col-md-6 col-12">
-              <label htmlFor="stream">{t('select_stream')}</label>
-              <select
-                className="form-select"
-                id="stream"
-                name="stream"
-                value={formData.stream}
-                onChange={handleChange}
-              >
-                <option value="" disabled>{t('select')}</option>
-                <option value="TM">TM</option>
-                <option value="MF">MF</option>
-                <option value="Diğer">Diğer</option>
-              </select>
-            </div>
+            {shouldShowStreamField() && (
+              <div className="col-md-6 col-12">
+                <label htmlFor="stream">{t('select_stream')}</label>
+                <select
+                  className="form-select"
+                  id="stream"
+                  name="stream"
+                  value={formData.stream}
+                  onChange={handleChange}
+                >
+                  <option value="" disabled>{t('select')}</option>
+                  <option value="TM">TM</option>
+                  <option value="MF">MF</option>
+                  <option value="Diğer">Diğer</option>
+                </select>
+              </div>
+            )}
           </div>
 
           <hr className="form-divider" />
 
           {/* Sınav Günü ve Saati - Tek Satır */}
-          <div className="row mb-3">
-            <div className="col-md-6 col-12">
-              <label htmlFor="examDay">{t('exam_day')}*</label>
-              <select
-                className={`form-select ${errors.examDay ? 'is-invalid' : ''}`}
-                id="examDay"
-                name="examDay"
-                value={formData.examDay}
-                onChange={handleChange}
-              >
-                <option value="" disabled>{t('select')}</option>
-                <option value="3 Ocak">3 Ocak</option>
-                <option value="4 Ocak">4 Ocak</option>
-                <option value="5 Ocak">5 Ocak</option>
-                <option value="10 Ocak">10 Ocak</option>
-                <option value="11 Ocak">11 Ocak</option>
-                <option value="12 Ocak">12 Ocak</option>
-              </select>
+          {shouldShowExamFields() && (
+            <div className="row mb-3">
+              <div className="col-md-6 col-12">
+                <label htmlFor="examDay">{t('exam_day')}*</label>
+                <select
+                  className={`form-select ${errors.examDay ? 'is-invalid' : ''}`}
+                  id="examDay"
+                  name="examDay"
+                  value={formData.examDay}
+                  onChange={handleChange}
+                >
+                  <option value="" disabled>{t('select')}</option>
+                  <option value="3 Ocak">3 Ocak</option>
+                  <option value="4 Ocak">4 Ocak</option>
+                  <option value="5 Ocak">5 Ocak</option>
+                  <option value="10 Ocak">10 Ocak</option>
+                  <option value="11 Ocak">11 Ocak</option>
+                  <option value="12 Ocak">12 Ocak</option>
+                </select>
+              </div>
+              <div className="col-md-6 col-12">
+                <label htmlFor="examHour">{t('exam_hour')}*</label>
+                <select
+                  className={`form-select ${errors.examHour ? 'is-invalid' : ''}`}
+                  id="examHour"
+                  name="examHour"
+                  value={formData.examHour}
+                  onChange={handleChange}
+                  disabled={!formData.examDay || getExamHours().length === 0}
+                >
+                  <option value="" disabled>{formData.examDay ? t('select') : t('first_select_exam_day')}</option>
+                  {getExamHours().map((hour) => (
+                    <option key={hour} value={hour}>
+                      {hour}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <div className="col-md-6 col-12">
-              <label htmlFor="examHour">{t('exam_hour')}*</label>
-              <select
-                className={`form-select ${errors.examHour ? 'is-invalid' : ''}`}
-                id="examHour"
-                name="examHour"
-                value={formData.examHour}
-                onChange={handleChange}
-                disabled={!formData.examDay || getExamHours().length === 0}
-              >
-                <option value="" disabled>{formData.examDay ? t('select') : t('first_select_exam_day')}</option>
-                {getExamHours().map((hour) => (
-                  <option key={hour} value={hour}>
-                    {hour}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+          )}
 
           <hr className="form-divider" />
 
@@ -592,6 +726,15 @@ function Scholarship() {
           {submitStatus === 'error' && <p className="text-danger mt-3">{t('submit_error')}</p>}
 
         </form>
+
+        {/* Başarı Mesajı */}
+        {showSuccessMessage && (
+          <div className="popup-overlay" style={{ zIndex: 9999 }}>
+            <div className="popup-content" style={{ textAlign: 'center', padding: '30px' }}>
+              <h3 style={{ color: '#28a745', marginBottom: '20px' }}>Başvurunuz başarıyla alınmıştır. Teşekkür ederiz.</h3>
+            </div>
+          </div>
+        )}
 
 
         <div className="empty-space_init"></div>
@@ -770,9 +913,14 @@ function Scholarship() {
 
               <br></br>
               <p>{t('exam_document_before')}</p>
-              <button onClick={closeDownloadPopup} className="btn btn-secondary">
-                {t('close')}
-              </button>
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '20px' }}>
+                <button onClick={handlePrintPDF} className="btn btn-primary">
+                  Yazdır
+                </button>
+                <button onClick={closeDownloadPopup} className="btn btn-secondary">
+                  {t('close')}
+                </button>
+              </div>
             </div>
           </div>
         )}
