@@ -13,6 +13,9 @@ import slider7 from '../assets/Slider7.png';
 import slider8 from '../assets/Slider8.gif';
 import slider9 from '../assets/Slider9.png';
 import slider10 from '../assets/Slider10.png';
+import slider11 from '../assets/matbilim-basarilar-siralama-yatay.jpg';
+import slider12 from '../assets/matbilim-basarilar-yatay.jpg';
+
 import slider1_Mobile from '../assets/Slider1-Mobile.png';
 import slider3_Mobile from '../assets/slider3-Mobile.png';
 import slider5_Mobile from '../assets/Slider5-Mobile.png';
@@ -20,7 +23,10 @@ import slider6_Mobile from '../assets/Slider6-Mobile.png';
 import slider7_Mobile from '../assets/Slider7-Mobile.png';
 import slider8_Mobile from '../assets/Slider8-Mobile.gif';
 import slider9_Mobile from '../assets/Slider9-Mobile.png';
-import popupImage from '../assets/popupImage.jpeg';
+import slider11_Mobile from '../assets/matbilim-basarilar-siralama-story.jpg';
+import slider12_Mobile from '../assets/matbilim-basarilar-story.jpg';
+
+import popupImage from '../assets/matbilim-sinav-yatay.jpg';
 import mainImageSolo from '../assets/main_image_solo.png'; // Resmin doğru yolu
 import WhatsApp from '../components/WhatsApp';
 function Home() {
@@ -118,6 +124,12 @@ function Home() {
         </div>
         <div>
           <img src={isMobile ? slider9_Mobile : slider9} alt="Slide 9" className="img-fluid" />
+        </div>
+        <div>
+          <img src={isMobile ? slider11_Mobile : slider11} alt="Slide 11" className="img-fluid" />
+        </div>
+        <div>
+          <img src={isMobile ? slider12_Mobile : slider12} alt="Slide 12" className="img-fluid" />
         </div>
       </Slider>
 
