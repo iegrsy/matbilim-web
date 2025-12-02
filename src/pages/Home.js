@@ -79,7 +79,7 @@ function Home() {
               <button className="popup-close-home" onClick={closePopup}>
                 ×
               </button>
-              <a href="/scholarship?form=true#form">
+              <a href="/scholarship">
                 <img src={popupImage} alt="Popup Görseli" className="popup-image-home" />
               </a>
             </div>
