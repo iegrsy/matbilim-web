@@ -1,0 +1,82 @@
+/* src/pages/AtaturkRows.css */
+
+.ataturk-rows {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .row {
+    display: flex;
+    align-items: flex-start; /* Dikey hizalama */
+    margin-bottom: 40px;     /* Satırlar arası boşluk */
+  }
+  
+  /* Solda resim, sağda alıntı */
+  .row-left {
+    flex-direction: row;
+  }
+  
+  /* Sağda resim, solda alıntı */
+  .row-right {
+    flex-direction: row-reverse;
+  }
+  
+  .row-image img {
+    width: 100%;
+    max-width: 400px; /* Resimlerin genişliğini sınırla */
+    border-radius: 4px;
+  }
+  
+  /* Görsel ve yazı arasında biraz boşluk olsun */
+  .row-image,
+  .row-quote {
+    margin: 0 20px;
+    flex: 1; /* Her iki taraf da genişleyebilsin */
+  }
+  
+  .quote-text {
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  .quote-author {
+    font-weight: bold;
+    text-align: right;
+  }
+  
+  @media screen and (max-width: 768px) {
+    /* Satırları üst üste dizmek için flex yönünü kolon yapalım */
+    .row {
+      flex-direction: column;
+    }
+  
+    /* Solda / sağda diye bir ayrım kalmadığından row-left / row-right aynı etkiyi alır */
+    .row-left, .row-right {
+      flex-direction: column; 
+    }
+  
+    /* Kenar boşluklarını azaltalım, tüm genişliğe yayılabilsin */
+    .row-image,
+    .row-quote {
+      margin: 10px 0;
+      flex: unset; /* ya da flex: none; */
+    }
+  
+    /* Mobilde resmin genişliği ekranın tamamını alabilir */
+    .row-image img {
+      max-width: 100%;
+    }
+  
+    /* Metin hizalamasını da isteğe göre değiştirebilirsiniz
+       Örnek: quote-author'ı sola hizalamak için */
+    .quote-author {
+      text-align: left;
+    }
+  }
+
