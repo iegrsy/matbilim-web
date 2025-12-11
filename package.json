@@ -24,8 +24,17 @@
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "glob": "^10.3.10",
+    "imagemin": "^8.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.0",
+    "imagemin-webp": "^7.0.0"
+  },
   "scripts": {
     "start": "react-scripts start",
+    "optimize-images": "node scripts/optimize-images.js",
+    "prebuild": "npm run optimize-images",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
