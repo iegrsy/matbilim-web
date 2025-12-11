@@ -397,6 +397,9 @@ function Scholarship() {
               <button type="button" className="btn btn-purple-moon btn-rounded" onClick={() => (window.location.href = '/achievement')}>{t('achievement')}</button>
             </div>
             <div class="btn-group button-width-large" role="group">
+              <button type="button" className="btn btn-purple-moon btn-rounded" onClick={() => window.open(process.env.PUBLIC_URL + '/pdfs/sinav_yonergesi.pdf', '_blank')}>{t('test_rubric')}</button>
+            </div>
+            <div class="btn-group button-width-large" role="group">
               <button type="button" className="btn btn-purple-moon btn-rounded" onClick={handlePopupToggle}>{t('exem_subject')}</button>
             </div>
           </div>
