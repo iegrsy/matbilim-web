@@ -2,20 +2,32 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
   }
   
   .tabs button {
     padding: 10px 20px;
     margin: 0 10px;
-    border: none;
-    background: #eee;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    color: #333;
     cursor: pointer;
     font-size: 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: 500;
   }
   
+  .tabs button:hover {
+    background: #e0e0e0;
+    border-color: #999;
+  }
+
   .tabs button.active {
     background: #d32f2f;
     color: white;
+    border-color: #d32f2f;
   }
   
   .grid-container {
@@ -32,7 +44,6 @@
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.3s ease;
-    
   }
   
   .teacher-card:hover {
@@ -46,26 +57,15 @@
   }
   
   .teacher-card h3 {
-    margin: 10px 0;
+    margin: 10px;
     font-size: large;
     color: #5177c4;
-    
-  }
-  @media only screen and (max-width: 1024px) {
-    .teacher-card h3{
-      font-size: small;
-      font-weight: bold;
-    }
-
-    .teacher-card{
-      
-      font-size: x-small;
-    }
   }
   
   .teacher-card p {
     color: #666;
-    margin-bottom: 10px;
+    margin: 0 10px 10px 10px;
+    font-size: 14px;
   }
   
   .modal {
@@ -79,12 +79,15 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    z-index: 1000;
+    padding: 10px;
   }
   
   .modal img {
-    max-width: 90%;
-    max-height: 90%;
+    max-width: 100%;
+    max-height: 100%;
     border-radius: 10px;
+    object-fit: contain;
   }
   
   .empty-space_init {
@@ -98,13 +101,12 @@
   .founder-card {
     background: #f3f3f3;
     padding: 20px;
-    margin-bottom: 30px;
+    margin: 0 20px 30px 20px;
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.3s ease;
-    font-size: xx-small;
   }
   
   .founder-card:hover {
@@ -122,10 +124,174 @@
   .founder-card h2 {
     font-size: 22px;
     margin: 10px 0;
+    color: #5177c4;
   }
   
   .founder-card p {
     font-size: 16px;
     color: #666;
+  }
+
+  /* Tablet Styles */
+  @media only screen and (max-width: 1024px) {
+    .grid-container {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      padding: 15px;
+    }
+
+    .teacher-card img {
+      height: 350px;
+    }
+
+    .teacher-card h3 {
+      font-size: medium;
+      font-weight: bold;
+    }
+
+    .teacher-card p {
+      font-size: 12px;
+    }
+
+    .founder-card img {
+      width: 250px;
+      height: 250px;
+    }
+
+    .founder-card h2 {
+      font-size: 20px;
+    }
+
+    .founder-card p {
+      font-size: 14px;
+    }
+  }
+
+  /* Mobile Styles */
+  @media only screen and (max-width: 768px) {
+    .tabs {
+      margin-bottom: 15px;
+      padding: 0 10px;
+    }
+
+    .tabs button {
+      padding: 8px 15px;
+      margin: 0 5px;
+      font-size: 14px;
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .grid-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 15px;
+    }
+
+    .teacher-card img {
+      height: 280px;
+    }
+
+    .teacher-card h3 {
+      font-size: 14px;
+      margin: 8px;
+    }
+
+    .teacher-card p {
+      font-size: 11px;
+      margin: 0 8px 8px 8px;
+    }
+
+    .founder-card {
+      margin: 0 15px 20px 15px;
+      padding: 15px;
+    }
+
+    .founder-card img {
+      width: 200px;
+      height: 200px;
+    }
+
+    .founder-card h2 {
+      font-size: 18px;
+    }
+
+    .founder-card p {
+      font-size: 13px;
+    }
+
+    .empty-space_init {
+      height: 40px;
+    }
+
+    .empty-space {
+      height: 20px;
+    }
+
+    .modal {
+      padding: 20px;
+    }
+  }
+
+  /* Small Mobile Styles */
+  @media only screen and (max-width: 480px) {
+    .tabs {
+      flex-direction: column;
+      gap: 8px;
+      padding: 0 15px;
+    }
+
+    .tabs button {
+      width: 100%;
+      margin: 0;
+      padding: 10px;
+      font-size: 13px;
+    }
+
+    .grid-container {
+      grid-template-columns: 1fr;
+      gap: 15px;
+      padding: 15px;
+    }
+
+    .teacher-card img {
+      height: 350px;
+    }
+
+    .teacher-card h3 {
+      font-size: 15px;
+      margin: 10px;
+    }
+
+    .teacher-card p {
+      font-size: 12px;
+      margin: 0 10px 10px 10px;
+    }
+
+    .founder-card {
+      margin: 0 10px 20px 10px;
+      padding: 15px;
+    }
+
+    .founder-card img {
+      width: 180px;
+      height: 180px;
+    }
+
+    .founder-card h2 {
+      font-size: 16px;
+    }
+
+    .founder-card p {
+      font-size: 12px;
+    }
+
+    .empty-space_init {
+      height: 30px;
+    }
+
+    .empty-space {
+      height: 15px;
+    }
   }
 
