@@ -1,25 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css'; // Slider stil dosyaları
-import './PrimaryschoolGallery.css'; // Home.css dosyasını dahil ediyoruz
-import soon from '../../assets/soon.png';
 import { useNavigate } from 'react-router-dom';
-import FixedFooter from '../../components/FixedFooter';
+import FixedFooter from '../../components/FixedFooter'; // FixedFooter bileşeni
+import './PrimaryschoolGallery.css';
 function PrimaryschoolGallery() {
+  const [selectedImage, setSelectedImage] = useState(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const importAll = (requireContext) =>
+    requireContext.keys().map(requireContext);
+  const gallery = importAll(
+    require.context('../../gallery/primary', false, /\.(png|jpe?g|svg)$/)
+  );
 
   return (
-
     <div>
-
-<div className="empty-space_init"></div>
+      <div className="empty-space_init"></div>
       <div className="empty-space"></div>
-      <section className="container pt-5 pb-5 text-center">
-        <h2>Burada güzel şeyler olacak. Çok Yakında!</h2>
-        {/* Resmi gösteriyoruz */}
-        <img src={soon} alt="Soon" className="centered-image" />
+      <section data-type="component-text">
+        <section className="container pt-5 pb-5">
+          <div className="grid-container">
+            {gallery.map((image, index) => (
+              <div
+                key={index}
+                className="teacher-card"
+                onClick={() => setSelectedImage(image)}
+              >
+                <img src={image} alt={`Gallery ${index + 1}`} />
+              </div>
+            ))}
+          </div>
+
+          {selectedImage && (
+            <div className="modal" onClick={() => setSelectedImage(null)}>
+              <img src={selectedImage} alt="Selected" />
+            </div>
+          )}
+        </section>
       </section>
  <FixedFooter>
   <section className="pt-2 pb-2 news">
