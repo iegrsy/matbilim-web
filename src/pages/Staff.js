@@ -73,7 +73,7 @@ import kurs_gonul_koparal from '../staff/KURS/gönül koparal KURS okul müdür�
 import kurs_ilker_nafile from '../staff/KURS/İLKER İHSAN RECEP NAFİLE KURUCU.jpg'
 
 // KURS/lise alt klasöründeki dosyalar
-import kurs_lise_irem_caglar from '../staff/KURS/lise/irem çağlar ölçme değerlendirme uzmanı.jpeg'
+// import kurs_lise_irem_caglar from '../staff/KURS/lise/irem çağlar ölçme değerlendirme uzmanı.jpeg'
 
 function Staff() {
     const { t } = useTranslation();
