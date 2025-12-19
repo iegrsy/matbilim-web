@@ -742,169 +742,163 @@ function Scholarship() {
 
         <div className="empty-space_init"></div>
         {showPopup && (
-        <div className="popup-overlay">
-          <div className="centered-popup-content">
-            <h2>{t('choose_class')}</h2>
-
-            {/* Listelerin olduğu kapsayıcı */}
-            <div className="centered-lists-container">
-              {/* 1. sütun */}
-              <ul>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/konuDagilimi2.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    2. SINIF
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/konuDagilimi3.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    3. SINIF
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/konuDagilimi4.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    4. SINIF
-                  </a>
-                </li>
-              </ul>
-
-              {/* 2. sütun */}
-              <ul>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/konuDagilimi5.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    5. SINIF
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/konuDagilimi6.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    6. SINIF
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/konuDagilimi7.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    7. SINIF
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/konuDagilimi8.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    8. SINIF
-                  </a>
-                </li>
-              </ul>
-
-              {/* 3. sütun */}
-              <ul>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/9_Konu_Analizi.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    9. SINIF
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/10_Konu_Analizi.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    10. SINIF
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/11_TM_Konu_Analizi.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    11. SINIF - TM
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="scholarship-link"
-                    onClick={() =>
-                      window.open(
-                        process.env.PUBLIC_URL + '/pdfs/11_MF_Konu_Analizi.pdf',
-                        '_blank'
-                      )
-                    }
-                  >
-                    11. SINIF - MF
-                  </a>
-                </li>
-              </ul>
+        <div className="popup-overlay" onClick={handlePopupToggle}>
+          <div className="modern-class-popup-content" onClick={(e) => e.stopPropagation()}>
+            <div className="class-popup-header">
+              <h2>{t('choose_class')}</h2>
+              <button className="close-button" onClick={handlePopupToggle} aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
             </div>
 
-            <button className="btn btn-primary" onClick={handlePopupToggle}>{t('close')}</button>
+            {/* Modern grid layout */}
+            <div className="class-grid-container">
+              {/* 1. sütun */}
+              <div className="class-column">
+                <button
+                  className="class-card"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/konuDagilimi2.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">2</span>
+                  <span className="class-label">SINIF</span>
+                </button>
+                <button
+                  className="class-card"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/konuDagilimi3.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">3</span>
+                  <span className="class-label">SINIF</span>
+                </button>
+                <button
+                  className="class-card"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/konuDagilimi4.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">4</span>
+                  <span className="class-label">SINIF</span>
+                </button>
+              </div>
+
+              {/* 2. sütun */}
+              <div className="class-column">
+                <button
+                  className="class-card"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/(5. SINIF) BURSLULUK VE KABUL SINAVI KONU.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">5</span>
+                  <span className="class-label">SINIF</span>
+                </button>
+                <button
+                  className="class-card"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/(6. SINIF) BURSLULUK VE KABUL SINAVI KONU.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">6</span>
+                  <span className="class-label">SINIF</span>
+                </button>
+                <button
+                  className="class-card"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/(7. SINIF) BURSLULUK VE KABUL SINAVIKONU.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">7</span>
+                  <span className="class-label">SINIF</span>
+                </button>
+                <button
+                  className="class-card"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/(8. SINIF) BURSLULUK VE KABUL SINAVI KONU.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">8</span>
+                  <span className="class-label">SINIF</span>
+                </button>
+              </div>
+
+              {/* 3. sütun */}
+              <div className="class-column">
+                <button
+                  className="class-card"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/(9.SINIF) KABUL SINAVI KONU.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">9</span>
+                  <span className="class-label">SINIF</span>
+                </button>
+                <button
+                  className="class-card"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/(10.SINIF) BURSLULUK VE KABUL SINAVI KONU.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">10</span>
+                  <span className="class-label">SINIF</span>
+                </button>
+                <button
+                  className="class-card class-card-special"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/11_TM_Konu_Analizi.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">11</span>
+                  <span className="class-label">SINIF - TM</span>
+                </button>
+                <button
+                  className="class-card class-card-special"
+                  onClick={() =>
+                    window.open(
+                      process.env.PUBLIC_URL + '/pdfs/11_MF_Konu_Analizi.pdf',
+                      '_blank'
+                    )
+                  }
+                >
+                  <span className="class-number">11</span>
+                  <span className="class-label">SINIF - MF</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
